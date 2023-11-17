@@ -12,16 +12,19 @@ class TreeNode
         int _endIndex;
 
         Matrix* _matrix = nullptr;
+        
         TreeNode* _left = nullptr;
         TreeNode* _right = nullptr;
+        TreeNode* _previuous = nullptr;
 
-        TreeNode(int startIndex, int endIndex);
-        TreeNode(Matrix* matrix, int startIndex, int endIndex);
+        TreeNode(int startIndex, int endIndex, TreeNode* previous = nullptr);
+        TreeNode(Matrix* matrix, int startIndex, int endIndex, TreeNode* previous = nullptr);
         
         ~TreeNode();
 
         void SetLeft(TreeNode* left);
         void SetRight(TreeNode* right);
+        void SetPreviuous(TreeNode* previuous);
 };
 
 #endif
