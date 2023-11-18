@@ -71,7 +71,17 @@ class Matrix
          * @param other A outra matriz a ser multiplicada.
          * @return O resultado da multiplicação das matrizes.
          */
-        Matrix* operator*(Matrix& other);
+        Matrix* Multiply(Matrix* other);
+
+        /**
+         * @brief Cria uma cópia da matriz.
+         * 
+         * Este método cria uma cópia da matriz, alocando memória para a nova matriz e copiando
+         * os valores da matriz original para a nova matriz.
+         * 
+         * @return A cópia da matriz.
+        */
+        Matrix* Copy();
 };
 
 #endif

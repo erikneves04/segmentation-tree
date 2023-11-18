@@ -7,13 +7,7 @@ Matrix::Matrix()
 {
     for (int i = 0; i < MATRIX_SIZE; i++)
     {
-        for (int j = 0; j < MATRIX_SIZE; j++)
-        {
-            if (i == j)
-                _matrix[i][i] = 1;
-            else
-                _matrix[i][j] = 0;
-        }
+        _matrix[i][i] = 1;
     }
 }
 
@@ -50,7 +44,7 @@ void Matrix::Print()
     }
 }
 
-Matrix* Matrix::operator*(Matrix& other)
+Matrix* Matrix::Multiply(Matrix* other)
 {
     Matrix* result = new Matrix();
 
@@ -62,10 +56,25 @@ Matrix* Matrix::operator*(Matrix& other)
 
             for(int k = 0; k < MATRIX_SIZE; k++)
             {
-                sum += _matrix[i][k] * other._matrix[k][j];
+                sum += _matrix[i][k] * other->_matrix[k][j];
             }
 
             result->_matrix[i][j] = sum;
+        }
+    }
+
+    return result;
+}
+
+Matrix* Matrix::Copy()
+{
+    Matrix* result = new Matrix();
+
+    for(int i = 0; i < MATRIX_SIZE; i++)
+    {
+        for(int j = 0; j < MATRIX_SIZE; j++)
+        {
+            result->_matrix[i][j] = _matrix[i][j];
         }
     }
 
