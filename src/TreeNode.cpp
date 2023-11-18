@@ -1,20 +1,18 @@
 #include "TreeNode.hpp"
 
-TreeNode::TreeNode(int startIndex, int endIndex, TreeNode* previous = nullptr)
+TreeNode::TreeNode(Matrix* matrix, int startIndex, int endIndex, TreeNode* previous)
 {
     _startIndex = startIndex;
     _endIndex = endIndex;
     _previuous = previous;
-}
-
-TreeNode::TreeNode(Matrix* matrix, int startIndex, int endIndex, TreeNode* previous = nullptr)
-    : TreeNode(startIndex, endIndex, previous)
-{
     _matrix = matrix;
 }
 
 TreeNode::~TreeNode()
-{ }
+{ 
+    if (_matrix != nullptr)
+        delete _matrix;
+}
 
 void TreeNode::SetLeft(TreeNode* left)
 {

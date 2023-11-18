@@ -17,9 +17,7 @@ class TreeNode
         TreeNode* _right = nullptr;
         TreeNode* _previuous = nullptr;
 
-        TreeNode(int startIndex, int endIndex, TreeNode* previous = nullptr);
-        TreeNode(Matrix* matrix, int startIndex, int endIndex, TreeNode* previous = nullptr);
-        
+        TreeNode(Matrix* matrix, int startIndex, int endIndex, TreeNode* previous);
         ~TreeNode();
 
         void SetLeft(TreeNode* left);
