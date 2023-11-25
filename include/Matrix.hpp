@@ -14,7 +14,7 @@
 class Matrix
 {
     private:
-        int _matrix[MATRIX_SIZE][MATRIX_SIZE];
+        long int _matrix[MATRIX_SIZE][MATRIX_SIZE];
 
     public:
         /**
@@ -41,7 +41,7 @@ class Matrix
          * @param j Índice da coluna da matriz.
          * @return O valor da posição da matriz.
          */
-        int Get(int i, int j);
+        long int Get(int i, int j);
         
         /**
          * @brief Define o valor de uma posição da matriz.
@@ -53,7 +53,7 @@ class Matrix
          * @param j Índice da coluna da matriz.
          * @param value Valor a ser definido na posição da matriz.
          */
-        void Set(int i, int j, int value);
+        void Set(int i, int j, long int value);
 
         /**
          * @brief Imprime a matriz na saída padrão.

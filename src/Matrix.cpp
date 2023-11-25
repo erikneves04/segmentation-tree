@@ -7,7 +7,13 @@ Matrix::Matrix()
 {
     for (int i = 0; i < MATRIX_SIZE; i++)
     {
-        _matrix[i][i] = 1;
+        for(int j = 0; j < MATRIX_SIZE; j++)
+        {
+            if (i == j)
+                _matrix[i][i] = 1;
+            else
+                _matrix[i][j] = 0;
+        }       
     }
 }
 
@@ -20,13 +26,13 @@ void ThrowExceptionIfIsInvalidPosition(int i, int j)
         throw invalid_matrix_positon_exception();
 }
 
-int Matrix::Get(int i, int j)
+long int Matrix::Get(int i, int j)
 {
     ThrowExceptionIfIsInvalidPosition(i, j);
     return _matrix[i][j];
 }
 
-void Matrix::Set(int i, int j, int value)
+void Matrix::Set(int i, int j, long int value)
 {
     ThrowExceptionIfIsInvalidPosition(i, j);
     _matrix[i][j] = value;
@@ -52,7 +58,7 @@ Matrix* Matrix::Multiply(Matrix* other)
     {
         for(int j = 0; j < MATRIX_SIZE; j++)
         {
-            int sum = 0;
+            long int sum = 0;
 
             for(int k = 0; k < MATRIX_SIZE; k++)
             {
