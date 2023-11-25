@@ -28,7 +28,7 @@ void RestoreInputStream()
     input_file.close();
 }
 
-void BaseTest(std::string testCase, std::string output)
+void BaseTest(std::string testCase, int queries[MATRIX_SIZE])
 {
     RedirectInputStream(testCase);
 
