@@ -23,6 +23,8 @@ class TreeNode
         void SetLeft(TreeNode* left);
         void SetRight(TreeNode* right);
         void SetPreviuous(TreeNode* previuous);
+
+        void Print();
 };
 
 #endif
