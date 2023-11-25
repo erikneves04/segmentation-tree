@@ -46,22 +46,35 @@ TreeNode* SegmentationTree::GetSheetNode(TreeNode* current, int index)
 
 void SegmentationTree::PerformUpdate()
 {
-    int  time;
-    std::cin >> time;
+    int index;
+    std::cin >> index;
 
-    TreeNode* node = GetSheetNode(_root, time);
+    long int values[MATRIX_SIZE][MATRIX_SIZE];
+
+    for(int i = 0; i < MATRIX_SIZE; i++)
+    {
+        for(int j = 0; j < MATRIX_SIZE; j++)
+        {
+            std::cin >> values[i][j];
+        }
+    }
+
+    PerformUpdate(index, values);
+}
+
+void SegmentationTree::PerformUpdate(int index, long int (*values)[MATRIX_SIZE])
+{
+    TreeNode* node = GetSheetNode(_root, index);
     Matrix* matrix = node->_matrix;
 
     if (matrix == nullptr)
         return;
 
-    int value;
     for(int i = 0; i < MATRIX_SIZE; i++)
     {
         for(int j = 0; j < MATRIX_SIZE; j++)
         {
-            std::cin >> value;
-            matrix->Set(i, j, value);
+            matrix->Set(i, j, values[i][j]);
         }
     }
 
@@ -148,7 +161,10 @@ RangeType SegmentationTree::GetRangeType(TreeNode* current, int startIndex, int 
     if (current == nullptr)
         return OUTOFRANGE;
 
-    if (current->_startIndex < endIndex || current->_endIndex < startIndex)
+    if (current->_startIndex < startIndex && current->_endIndex < startIndex)
+        return OUTOFRANGE;
+
+    if (current->_startIndex > endIndex || current->_endIndex < startIndex)
         return OUTOFRANGE;
 
     if (current->_startIndex >= startIndex && current->_endIndex <= endIndex)
@@ -173,7 +189,7 @@ Matrix* SegmentationTree::Search(TreeNode* current, int startIndex, int endIndex
     RangeType rangeType = GetRangeType(current, startIndex, endIndex);
 
     if (rangeType == OUTOFRANGE)
-        return nullptr;
+        return new Matrix();
 
     if (rangeType == INRANGE)
         return current->_matrix->Copy();
@@ -189,38 +205,53 @@ Matrix* SegmentationTree::Search(TreeNode* current, int startIndex, int endIndex
         Matrix* matrix1 = Search(current->_left, startIndex, endIndex);
         Matrix* matrix2 = Search(current->_right, startIndex, endIndex);
 
+        if (matrix1 == nullptr && matrix2 == nullptr)
+            return new Matrix();
+
+        if (matrix1 == nullptr)
+            return matrix2;
+
+        if (matrix2 == nullptr)
+            return matrix1;
+
+        Matrix* result = matrix1->Multiply(matrix2);
+
         delete matrix1;
         delete matrix2;
 
-        return matrix1->Multiply(matrix2);
+        return result;
     }
 
-    return nullptr;
+    return new Matrix();
 }
 
-int GetLast8Numbers(int number)
+Matrix* SegmentationTree::Search(int startIndex, int endIndex)
+{
+    return Search(_root, startIndex, endIndex);
+}
+
+int GetLast8Numbers(long int number)
 {
     return (number % 100000000);
 }
 
-void SegmentationTree::ApplyLinealTransformation(int startIndex, int endIndex, int coords[MATRIX_SIZE])
+int* SegmentationTree::ApplyLinealTransformation(int startIndex, int endIndex, int coords[MATRIX_SIZE])
 {
     Matrix* matrix = Search(_root, startIndex, endIndex);
-
+    
     if (matrix == nullptr)
-        return;
+        return nullptr;
+
+    int* result = new int[MATRIX_SIZE];
 
     for(int i = 0; i < MATRIX_SIZE; i++)
     {
-        int sum = 0;
-
+        long int sum = 0;
         for(int j = 0; j < MATRIX_SIZE; j++)
-        {
             sum += matrix->Get(j, i) * coords[i];
-        }
         
-        std::cout << GetLast8Numbers(sum);
-        if (i < MATRIX_SIZE - 1)
-            std::cout << " ";
+        result[i] = GetLast8Numbers(sum);
     }
+
+    return result;
 }

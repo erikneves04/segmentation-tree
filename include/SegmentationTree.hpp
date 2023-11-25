@@ -36,13 +36,15 @@ class SegmentationTree
         RangeType GetRangeType(TreeNode* current, int startIndex, int endIndex);
 
         Matrix* Search(TreeNode* current, int startIndex, int endIndex);
-
     public:
         SegmentationTree(int times, int operations);
         ~SegmentationTree();
 
         void PerformUpdate();
-        void ApplyLinealTransformation(int startIndex, int endIndex, int coords[MATRIX_SIZE]);
+        void PerformUpdate(int index, long int (*values)[MATRIX_SIZE]);
+        int* ApplyLinealTransformation(int startIndex, int endIndex, int coords[]);
+
+        Matrix* Search(int startIndex, int endIndex);
 };
 
 #endif
