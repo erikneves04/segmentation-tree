@@ -162,10 +162,7 @@ RangeType SegmentationTree::GetRangeType(TreeNode* current, int startIndex, int 
     if (current == nullptr)
         return OUTOFRANGE;
 
-    if (current->_startIndex < startIndex && current->_endIndex < startIndex)
-        return OUTOFRANGE;
-
-    if (current->_startIndex > endIndex || current->_endIndex < startIndex)
+    if (current->_endIndex < startIndex || current->_startIndex > endIndex)
         return OUTOFRANGE;
 
     if (current->_startIndex >= startIndex && current->_endIndex <= endIndex)
@@ -173,10 +170,10 @@ RangeType SegmentationTree::GetRangeType(TreeNode* current, int startIndex, int 
 
     int middleIndex = (current->_startIndex + current->_endIndex) / 2;
 
-    if (startIndex <= middleIndex && endIndex <= middleIndex)
+    if (endIndex <= middleIndex)
         return INLEFTTREE;
 
-    if (startIndex > middleIndex && endIndex > middleIndex)
+    if (endIndex > middleIndex)
         return INRIGHTTREE;
 
     if (startIndex <= middleIndex && endIndex > middleIndex)
@@ -231,7 +228,7 @@ Matrix* SegmentationTree::Search(int startIndex, int endIndex)
     return Search(_root, startIndex, endIndex);
 }
 
-int* SegmentationTree::ApplyLinealTransformation(int startIndex, int endIndex, int coords[MATRIX_SIZE])
+int* SegmentationTree::ApplyLinearTransformation(int startIndex, int endIndex, int coords[MATRIX_SIZE])
 {
     Matrix* matrix = Search(_root, startIndex, endIndex);
     
@@ -239,6 +236,9 @@ int* SegmentationTree::ApplyLinealTransformation(int startIndex, int endIndex, i
         return nullptr;
 
     int* result = new int[MATRIX_SIZE];
+
+    //std::cout << "Matriz resultante:" << std::endl;
+    //matrix->Print();
 
     for(int i = 0; i < MATRIX_SIZE; i++)
     {
@@ -250,4 +250,15 @@ int* SegmentationTree::ApplyLinealTransformation(int startIndex, int endIndex, i
     }
 
     return result;
+}
+
+void SegmentationTree::Print()
+{
+    for(int i = 0; i < _allTreeNodes->Length(); i++)
+    {
+        auto treeNode = _allTreeNodes->Get(i);
+        std::cout << "nó: " << treeNode->_startIndex << " " << treeNode->_endIndex << std::endl;
+        treeNode->_matrix->Print();
+        std::cout << "+--------------------------+" << std::endl;
+    }
 }

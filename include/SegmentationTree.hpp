@@ -42,9 +42,11 @@ class SegmentationTree
 
         void PerformUpdate();
         void PerformUpdate(int index, long int (*values)[MATRIX_SIZE]);
-        int* ApplyLinealTransformation(int startIndex, int endIndex, int coords[]);
+        int* ApplyLinearTransformation(int startIndex, int endIndex, int coords[]);
 
         Matrix* Search(int startIndex, int endIndex);
+
+        void Print();
 };
 
 #endif
