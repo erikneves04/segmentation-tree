@@ -61,7 +61,7 @@ Matrix* Matrix::Multiply(Matrix* other)
             for(int k = 0; k < MATRIX_SIZE; k++)
                 sum += _matrix[i][k] * other->_matrix[k][j];
 
-            result->_matrix[i][j] = ResultParser::GetLast8Digits(sum);
+            result->_matrix[i][j] = sum;
         }
     }
 
