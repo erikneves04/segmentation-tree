@@ -36,18 +36,6 @@ void Matrix::Set(int i, int j, long int value)
     _matrix[i][j] = value;
 }
 
-void Matrix::Print()
-{
-    for (int i = 0; i < MATRIX_SIZE; i++)
-    {
-        for (int j = 0; j < MATRIX_SIZE; j++)
-        {
-            std::cout << _matrix[i][j] << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
 Matrix* Matrix::Multiply(Matrix* other)
 {
     Matrix* result = new Matrix();
@@ -59,9 +47,9 @@ Matrix* Matrix::Multiply(Matrix* other)
             long int sum = 0;
 
             for(int k = 0; k < MATRIX_SIZE; k++)
-                sum += _matrix[i][k] * other->_matrix[k][j];
+                sum += ResultParser::GetLast8Digits(_matrix[i][k]) * ResultParser::GetLast8Digits(other->_matrix[k][j]);
 
-            result->_matrix[i][j] = sum;
+            result->_matrix[i][j] = ResultParser::GetLast8Digits(sum);
         }
     }
 
