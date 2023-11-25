@@ -8,6 +8,24 @@
 #define SUCCESS (00)
 #define FAILURE (01)
 
+/**
+ * @brief Imprime o vetor de resultados da transformação linear.
+ *
+ * Este método imprime os valores contidos no vetor resultante.
+ *
+ * @param result Um vetor de inteiros contendo os resultados a serem impressos.
+ */
+void PrintResultVector(int result[])
+{
+    for(int j = 0; j < MATRIX_SIZE; j++)
+    {
+        if (j == MATRIX_SIZE - 1)
+            std::cout << result[j] << std::endl;
+        else
+            std::cout << result[j] << " ";
+    }
+}
+
 int main(int argc, char const *argv[])
 {   
     try
@@ -22,27 +40,36 @@ int main(int argc, char const *argv[])
         // Aplicação das operações
         for(int i = 0; i < operations; i++)
         {
+            // Leitura da operação
             char option;
             std::cin >> option;
 
+            // Execução de atualização
             if (option == 'u')
                 tree->PerformUpdate();
             
+            // Execução de consulta
             if (option == 'q')
             {
+                // Leitura do intervalo
                 int start, end;
-
                 std::cin >> start;
                 std::cin >> end;
 
+                // Leitura das coordenadas
                 int coords[MATRIX_SIZE];
                 for(int j = 0; j < MATRIX_SIZE; j++)
                     std::cin >> coords[j];
                 
-                tree->ApplyLinealTransformation(start, end, coords);
+                // Aplicação e impressão da transformação linear
+                int* result = tree->ApplyLinearTransformation(start, end, coords);
+                PrintResultVector(result);
+                
+                // Liberação da memória do resultado
+                delete result;
             }
         }
-        
+
         // Liberação da memória
         delete tree;
     }
