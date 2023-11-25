@@ -1,7 +1,8 @@
+#include <iostream>
+
 #include "Matrix.hpp"
 #include "Exceptions.hpp"
-
-#include <iostream>
+#include "ResultParser.hpp"
 
 Matrix::Matrix()
 {
@@ -9,10 +10,7 @@ Matrix::Matrix()
     {
         for(int j = 0; j < MATRIX_SIZE; j++)
         {
-            if (i == j)
-                _matrix[i][i] = 1;
-            else
-                _matrix[i][j] = 0;
+            _matrix[i][j] = (i == j ? 1 : 0);
         }       
     }
 }
@@ -61,11 +59,9 @@ Matrix* Matrix::Multiply(Matrix* other)
             long int sum = 0;
 
             for(int k = 0; k < MATRIX_SIZE; k++)
-            {
                 sum += _matrix[i][k] * other->_matrix[k][j];
-            }
 
-            result->_matrix[i][j] = sum;
+            result->_matrix[i][j] = ResultParser::GetLast8Digits(sum);
         }
     }
 

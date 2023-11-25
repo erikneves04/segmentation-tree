@@ -2,6 +2,7 @@
 
 #include "Matrix.hpp"
 #include "LinkedList.hpp"
+#include "ResultParser.hpp"
 #include "SegmentationTree.hpp"
 
 SegmentationTree::SegmentationTree(int times, int operations)
@@ -230,11 +231,6 @@ Matrix* SegmentationTree::Search(int startIndex, int endIndex)
     return Search(_root, startIndex, endIndex);
 }
 
-int GetLast8Numbers(long int number)
-{
-    return (number % 100000000);
-}
-
 int* SegmentationTree::ApplyLinealTransformation(int startIndex, int endIndex, int coords[MATRIX_SIZE])
 {
     Matrix* matrix = Search(_root, startIndex, endIndex);
@@ -250,7 +246,7 @@ int* SegmentationTree::ApplyLinealTransformation(int startIndex, int endIndex, i
         for(int j = 0; j < MATRIX_SIZE; j++)
             sum += matrix->Get(j, i) * coords[i];
         
-        result[i] = GetLast8Numbers(sum);
+        result[i] = ResultParser::GetLast8Digits(sum);
     }
 
     return result;
