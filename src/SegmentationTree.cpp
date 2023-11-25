@@ -87,40 +87,14 @@ void SegmentationTree::UpdatePreviousNodes(TreeNode* current)
     if (current == nullptr)
         return;
 
-    if (current->_left != nullptr && current->_right != nullptr)
-    {
-        delete current->_matrix;
-        
-        auto matrix1 = current->_left->_matrix;
-        auto matrix2 = current->_right->_matrix;
+    delete current->_matrix;
+    
+    auto matrix1 = current->_left->_matrix;
+    auto matrix2 = current->_right->_matrix;
 
-        current->_matrix = matrix1->Multiply(matrix2);
-    }
-
-    if (current->_left == nullptr && current->_right != nullptr)
-    {
-        delete current->_matrix;
-        current->_matrix = current->_right->_matrix->Copy();
-    }
-
-    if (current->_left != nullptr && current->_right == nullptr)
-    {
-        delete current->_matrix;
-        current->_matrix = current->_left->_matrix->Copy();
-    }
-
+    current->_matrix = matrix1->Multiply(matrix2);
+    
     UpdatePreviousNodes(current->_previuous);
-}
-
-void PrintTree(TreeNode* tree)
-{
-    std::cout << "nó: " << tree->_startIndex << " " << tree->_endIndex << std::endl;
-
-    if (tree->_left != nullptr)
-        PrintTree(tree->_left);
-
-    if (tree->_right != nullptr)
-        PrintTree(tree->_right);
 }
 
 void SegmentationTree::FillWithIdentity()
@@ -170,14 +144,14 @@ RangeType SegmentationTree::GetRangeType(TreeNode* current, int startIndex, int 
 
     int middleIndex = (current->_startIndex + current->_endIndex) / 2;
 
+    if (startIndex <= middleIndex && endIndex > middleIndex)
+        return INBOTHTREES;
+
     if (endIndex <= middleIndex)
         return INLEFTTREE;
 
     if (endIndex > middleIndex)
         return INRIGHTTREE;
-
-    if (startIndex <= middleIndex && endIndex > middleIndex)
-        return INBOTHTREES;
 
     return OUTOFRANGE;
 }
@@ -231,34 +205,22 @@ Matrix* SegmentationTree::Search(int startIndex, int endIndex)
 int* SegmentationTree::ApplyLinearTransformation(int startIndex, int endIndex, int coords[MATRIX_SIZE])
 {
     Matrix* matrix = Search(_root, startIndex, endIndex);
-    
+
     if (matrix == nullptr)
         return nullptr;
 
     int* result = new int[MATRIX_SIZE];
 
-    //std::cout << "Matriz resultante:" << std::endl;
-    //matrix->Print();
-
     for(int i = 0; i < MATRIX_SIZE; i++)
     {
         long int sum = 0;
         for(int j = 0; j < MATRIX_SIZE; j++)
-            sum += matrix->Get(j, i) * coords[i];
+            sum += matrix->Get(i, j) * coords[j];
         
         result[i] = ResultParser::GetLast8Digits(sum);
     }
 
+    delete matrix;
+    
     return result;
-}
-
-void SegmentationTree::Print()
-{
-    for(int i = 0; i < _allTreeNodes->Length(); i++)
-    {
-        auto treeNode = _allTreeNodes->Get(i);
-        std::cout << "nó: " << treeNode->_startIndex << " " << treeNode->_endIndex << std::endl;
-        treeNode->_matrix->Print();
-        std::cout << "+--------------------------+" << std::endl;
-    }
 }
