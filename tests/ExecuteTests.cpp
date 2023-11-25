@@ -28,29 +28,50 @@ void RestoreInputStream()
     input_file.close();
 }
 
-void BaseTest(std::string testCase, int queries[MATRIX_SIZE])
+TEST_CASE("#01")
 {
-    RedirectInputStream(testCase);
+    RedirectInputStream("01");
 
-    try
+    int times, operations;
+    std::cin >> times >> operations;
+
+    SegmentationTree* tree = new SegmentationTree(times, operations);
+
+    long int results[5][MATRIX_SIZE][MATRIX_SIZE];
+
+    for(int i = 0; i < operations; i++)
     {
+        char option;
+        std::cin >> option;
+
+        if (option == 'u')
+            tree->PerformUpdate();
         
+        if (option == 'q')
+        {
+            int start, end;
+
+            std::cin >> start;
+            std::cin >> end;
+
+            int coords[MATRIX_SIZE];
+            for(int j = 0; j < MATRIX_SIZE; j++)
+                std::cin >> coords[j];
+            
+            int* result = tree->ApplyLinealTransformation(start, end, coords);
+            
+
+            
+            for(int j = 0; j < MATRIX_SIZE; j++)
+            {
+                if (j == MATRIX_SIZE - 1)
+                    std::cout << result[j] << std::endl;
+                else
+                    std::cout << result[j] << " ";
+            }
+            delete result;
+        }
     }
-    catch(element_not_found_exception)
-    {
-        std::cout << "Houve uma tentativa inválida de acesso a um item da lista encadeada!" << std::endl;
-        CHECK(false);
-    }
-    catch(invalid_matrix_positon_exception)
-    {
-        std::cout << "A posição da matriz escolhida é inválida!" << std::endl;
-        CHECK(false);
-    }
-    catch(...)
-    {
-        std::cout << "Houve um erro não identificado!" << std::endl;
-        CHECK(false);
-    }
-    
+
     RestoreInputStream();
 }
