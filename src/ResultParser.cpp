@@ -16,5 +16,5 @@ long int ResultParser::GetLastNDigits(long int value, int nDigits)
 
 long int ResultParser::GetLast8Digits(long int value)
 {
-    return GetLastNDigits(value, 8);
+    return value % 100000000;
 }
