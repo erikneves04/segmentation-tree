@@ -1,5 +1,4 @@
 #include "ResultParser.hpp"
-#include <string>
 
 long int ResultParser::GetLastNDigits(long int value, int nDigits)
 {

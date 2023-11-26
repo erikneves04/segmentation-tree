@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Matrix.hpp"
 #include "Exceptions.hpp"
 #include "ResultParser.hpp"
