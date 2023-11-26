@@ -1,6 +1,8 @@
 #include <string>
 #include <iostream>
 
+#include "memlog.h"
+
 #include "Matrix.hpp"
 #include "Exceptions.hpp"
 #include "SegmentationTree.hpp"
@@ -30,8 +32,14 @@ void PrintAndCleanVector(int result[])
     delete[] result;
 }
 
+char logName[100] = "data.out";
+
 int main(int argc, char const *argv[])
 {   
+    // Inicialização do log de memória
+    iniciaMemLog(logName);
+    ativaMemLog();
+
     try
     {
         // Leitura da informações iniciais
@@ -73,6 +81,8 @@ int main(int argc, char const *argv[])
 
         // Liberação da memória
         delete tree;
+
+        finalizaMemLog();
     }
     catch(element_not_found_exception)
     {
