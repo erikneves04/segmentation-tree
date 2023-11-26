@@ -221,6 +221,5 @@ int* SegmentationTree::ApplyLinearTransformation(int startIndex, int endIndex, i
     }
 
     delete matrix;
-    
     return result;
 }

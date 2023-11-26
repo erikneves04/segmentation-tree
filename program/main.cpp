@@ -9,13 +9,14 @@
 #define FAILURE (01)
 
 /**
- * @brief Imprime o vetor de resultados da transformação linear.
+ * @brief Imprime o vetor de resultados da transformação linear, após isso o vetor é
+ * apagado da memória.
  *
  * Este método imprime os valores contidos no vetor resultante.
  *
  * @param result Um vetor de inteiros contendo os resultados a serem impressos.
  */
-void PrintResultVector(int result[])
+void PrintAndCleanVector(int result[])
 {
     for(int j = 0; j < MATRIX_SIZE; j++)
     {
@@ -24,6 +25,9 @@ void PrintResultVector(int result[])
         else
             std::cout << result[j] << " ";
     }
+    
+    // Liberação do vetor já impresso
+    delete[] result;
 }
 
 int main(int argc, char const *argv[])
@@ -63,10 +67,7 @@ int main(int argc, char const *argv[])
                 
                 // Aplicação e impressão da transformação linear
                 int* result = tree->ApplyLinearTransformation(start, end, coords);
-                PrintResultVector(result);
-                
-                // Liberação da memória do resultado
-                delete result;
+                PrintAndCleanVector(result);
             }
         }
 
