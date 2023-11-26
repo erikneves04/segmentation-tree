@@ -46,6 +46,8 @@ int main(int argc, char const *argv[])
         int times, operations;
         std::cin >> times >> operations;
 
+        defineFaseMemLog(0);
+
         // Criação da árvore de segmentação preenchida com a matriz identidade
         SegmentationTree* tree = new SegmentationTree(times, operations);
 
