@@ -6,7 +6,7 @@
 #include "Exceptions.hpp"
 
 /**
- * @brief Estrutura que representa um nó em uma estrutura de dados(compartilhado com lista, fila e pilha).
+ * @brief Estrutura que representa um nó em uma com lista encadeada.
  *
  * Esta estrutura é utilizada para criar nós em uma estrutura. Cada nó contém um elemento
  * de dados do tipo DataType, uma referência para o próximo nó e uma referência para o nó anterior

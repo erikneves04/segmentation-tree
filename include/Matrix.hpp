@@ -9,7 +9,7 @@
  * @brief Classe que representa uma matriz quadrada de inteiros.
  * 
  * Esta classe representa uma matriz quadrada de inteiros, com tamanho definido pela macro
- * MATRIX_SIZE. A matriz é representada internamente por um array bidimensional de inteiros.
+ * MATRIX_SIZE. A matriz é representada internamente por um array bidimensional de inteiros(long int).
  */
 class Matrix
 {
@@ -56,20 +56,13 @@ class Matrix
         void Set(int i, int j, long int value);
 
         /**
-         * @brief Imprime a matriz na saída padrão.
-         * 
-         * Este método imprime a matriz na saída padrão, linha por linha.
-         */
-        void Print();
-
-        /**
-         * @brief Sobrecarga do operador de multiplicação.
-         * 
-         * Este método sobrecarrega o operador de multiplicação, permitindo que duas matrizes
-         * sejam multiplicadas.
-         * 
-         * @param other A outra matriz a ser multiplicada.
-         * @return O resultado da multiplicação das matrizes.
+         * @brief Multiplica a matriz por outra matriz.
+         *
+         * Este método realiza a multiplicação de matrizes, onde o resultado é
+         * uma nova matriz obtida pela multiplicação da matriz atual por outra matriz.
+         *
+         * @param other A matriz a ser multiplicada pela matriz atual.
+         * @return Uma nova matriz resultante da multiplicação.
          */
         Matrix* Multiply(Matrix* other);
 
